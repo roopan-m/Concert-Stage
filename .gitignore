@@ -1,0 +1,7 @@
+report.docx
+*.pyc
+.gitignore
+arrays.py
+diffusion.csv
+smoketest.py
+anim.py
