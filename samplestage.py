@@ -1,6 +1,7 @@
 import matplotlib.pyplot as plt
 from matplotlib.animation import FuncAnimation
 from classes import Lights, Smoke 
+from matplotlib.patches import Ellipse, Circle
 
 ################################################# VARIABLES
 l_origin_1 = [] #Between 0-500
@@ -16,10 +17,11 @@ def buildGraph(ax0, ax1):
     ax0.fill([0,500,500,0],[0,0,50,50], color="black")
     ax1.fill([0,500,500,0],[0,0,500,500], color="black")
     plt.suptitle("STAGEVIEW", fontsize="18")
+    plt.xlim(-30, 530)
     ax1.set_aspect("equal")
 
 def readData():
-    with open('colourMovement.csv', 'r') as f:
+    with open('dance.csv', 'r') as f:
         data = f.readlines()
         f.close()
 
@@ -29,7 +31,51 @@ def readData():
         l_origin_2.append(int(splitLines[1]))
         l_origin_3.append(int(splitLines[2]))
 
+def plotInstruments(ax1):
+
+    # DRUMS
+    ellipse = Ellipse([100,100], 60, 20, color='lightgrey', zorder=3)
+    ax1.add_patch(ellipse)
+    ellipse = Ellipse([100,60], 60, 20, color='maroon', zorder=3)
+    ax1.add_patch(ellipse)
+    ellipse = Ellipse([200,110], 60, 20, color='lightgrey', zorder=3)
+    ax1.add_patch(ellipse)
+    ellipse = Ellipse([200, 80], 60, 20, color='maroon', zorder=3)
+    ax1.add_patch(ellipse)
+    circle = Circle([150, 80], 40, color='lightgrey', zorder=4)
+    ax1.add_patch(circle)
+    circle = Circle([150, 92], 37, color='maroon', zorder=3)
+    ax1.add_patch(circle)
+
+    ax1.fill([69, 130, 130, 69],[60, 60, 100, 100], color='maroon', zorder=2)
+    ax1.fill([170, 230, 230, 170], [80, 80, 110, 110], color='maroon', zorder=2)
+
+    ax1.fill([80, 85, 85, 80], [0, 0, 90, 90], color='lightgrey', linewidth=1, edgecolor='maroon')
+    ax1.fill([110, 115, 115, 110], [0, 0, 90, 90], color='lightgrey', linewidth=1, edgecolor='maroon')
+    ax1.fill([187, 192, 192, 187], [0, 0, 90, 90], color='lightgrey', linewidth=1, edgecolor='maroon')
+    ax1.fill([215, 220, 220, 215], [0, 0, 90, 90], color='lightgrey', zorder=1, linewidth=1, edgecolor='maroon')
+
+    #GUITAR
+    circle = Circle([370, 70], 40, color='maroon')
+    ax1.add_patch(circle)
+    circle = Circle([390, 110], 30, color='maroon')
+    ax1.add_patch(circle)
+    circle = Circle([395, 110], 15, color='black', zorder=2)
+    ax1.add_patch(circle)
+    circle = Ellipse([360, 62], 20, 13, color='white', zorder=3)
+    ax1.add_patch(circle)
+    ax1.fill([358, 458, 452, 352], [40, 200, 210, 50], color='maroon')
+    ax1.plot([450, 355], [200, 60], color='white')
+    ax1.plot([450, 360], [190, 57], color='white')
+
+    #SMOKE MACHINE
+    ax1.fill([0, 20, 20, 0], [0, 0, 70, 70], color='darkgrey', zorder=5)
+    ax1.fill([20, 40, 40, 20], [0, 0, 80, 70], color='grey', zorder=5)
+
+
+###################
 ################################################## MAIN
+###################
 def main():
     #Graph Construction
     fig, (ax0, ax1) = plt.subplots(2, 1, gridspec_kw={'height_ratios': [1, 10]},
@@ -48,9 +94,10 @@ def main():
         plotLights.plot()
         plotSmoke = Smoke(frame, ax1)
         plotSmoke.plot()
+        plotInstruments(ax1)
 
     #Animate and update graph through update() 
-    animationLight = FuncAnimation(fig, update, interval=500, frames=len(l_origin_1), repeat=False)
+    animationLight = FuncAnimation(fig, update, interval=100, frames=len(l_origin_1), repeat=False)
     plt.show()
 
 if __name__ == '__main__':

@@ -22,12 +22,10 @@ class Lights:
         circle1 = plt.Circle([self.xcoords3[self.frame],25],20, color=self.color3)
         self.ax0.add_patch(circle1)
 
-        opacityRandom = random.random()
-        self.ax1.fill([self.xcoords1[self.frame]-15, self.xcoords1[self.frame]+15, self.xcoords1[self.frame]+50, self.xcoords1[self.frame]-50], [500, 500, 0, 0], color=self.color1, alpha=opacityRandom)
-        opacityRandom = random.random()
-        self.ax1.fill([self.xcoords2[self.frame]-15, self.xcoords2[self.frame]+15, self.xcoords2[self.frame]+50, self.xcoords2[self.frame]-50], [500, 500, 0, 0], color=self.color2, alpha=opacityRandom) 
-        opacityRandom = random.random()
-        self.ax1.fill([self.xcoords3[self.frame]-15, self.xcoords3[self.frame]+15, self.xcoords3[self.frame]+50, self.xcoords3[self.frame]-50], [500, 500, 0, 0], color=self.color3, alpha=opacityRandom)
+
+        self.ax1.fill([self.xcoords1[self.frame]-15, self.xcoords1[self.frame]+15, self.xcoords1[self.frame]+50, self.xcoords1[self.frame]-50], [500, 500, 0, 0], color=self.color1)
+        self.ax1.fill([self.xcoords2[self.frame]-15, self.xcoords2[self.frame]+15, self.xcoords2[self.frame]+50, self.xcoords2[self.frame]-50], [500, 500, 0, 0], color=self.color2) 
+        self.ax1.fill([self.xcoords3[self.frame]-15, self.xcoords3[self.frame]+15, self.xcoords3[self.frame]+50, self.xcoords3[self.frame]-50], [500, 500, 0, 0], color=self.color3)
     
 
 class Smoke: 
@@ -38,7 +36,7 @@ class Smoke:
 
     def plot(self):
         row = 10
-        column  = 40
+        column  = 50
         currentArray = np.zeros((row, column))
         nextArray = np.zeros((row, column))
         currentArray[5:9,0] = 1
@@ -69,11 +67,16 @@ class Smoke:
         #Create Circles
         for i in range(row):
             for y in range(column):
-                rand = np.random.randint(5, 10, 2)
-                if not nextArray[i, y] > 1:
-                    circle = plt.Circle([columnValues[y]+rand[0], rowValues[i]+rand[1]], 4, color='white', alpha=nextArray[i, y])
+                randomness = (self.frame + 1)
+                if randomness >= 8:
+                    randomness = 8
+                rand = np.random.randint(5, 10 * randomness, 2)
+                if not nextArray[i, y] > 0.7:
+                    radius = random.randint(4, 6)
+                    circle = plt.Circle([columnValues[y]+rand[0], rowValues[i]+rand[1]-20], radius, color='white', alpha=nextArray[i, y])
                 else: 
-                    circle = plt.Circle([columnValues[y]+rand[0], rowValues[i]+rand[1]], 4, color='white', alpha=1)
+                    radius = random.randint(4, 10)
+                    circle = plt.Circle([columnValues[y]+rand[0], rowValues[i]+rand[1]-20], radius, color='white', alpha=0.7)
 
                 self.ax1.add_patch(circle)
 
