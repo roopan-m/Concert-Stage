@@ -15,21 +15,23 @@ class Lights:
         self.ax1 = ax1
     
     def plot(self):
-        circle1 = plt.Circle([self.xcoords1[self.frame],25],20, color=self.color1)
-        self.ax0.add_patch(circle1)
-        circle1 = plt.Circle([self.xcoords2[self.frame],25],20, color=self.color2)
-        self.ax0.add_patch(circle1)
-        circle1 = plt.Circle([self.xcoords3[self.frame],25],20, color=self.color3)
-        self.ax0.add_patch(circle1)
+        if self.xcoords1[self.frame] != 0:
+            circle1 = plt.Circle([self.xcoords1[self.frame],25],20, color=self.color1)
+            self.ax0.add_patch(circle1)
+            self.ax1.fill([self.xcoords1[self.frame]-15, self.xcoords1[self.frame]+15, self.xcoords1[self.frame]+50, self.xcoords1[self.frame]-50], [500, 500, 0, 0], color=self.color1)
 
+        if self.xcoords2[self.frame] != 0:
+            circle1 = plt.Circle([self.xcoords2[self.frame],25],20, color=self.color2)
+            self.ax0.add_patch(circle1)
+            self.ax1.fill([self.xcoords2[self.frame]-15, self.xcoords2[self.frame]+15, self.xcoords2[self.frame]+50, self.xcoords2[self.frame]-50], [500, 500, 0, 0], color=self.color2) 
 
-        self.ax1.fill([self.xcoords1[self.frame]-15, self.xcoords1[self.frame]+15, self.xcoords1[self.frame]+50, self.xcoords1[self.frame]-50], [500, 500, 0, 0], color=self.color1)
-        self.ax1.fill([self.xcoords2[self.frame]-15, self.xcoords2[self.frame]+15, self.xcoords2[self.frame]+50, self.xcoords2[self.frame]-50], [500, 500, 0, 0], color=self.color2) 
-        self.ax1.fill([self.xcoords3[self.frame]-15, self.xcoords3[self.frame]+15, self.xcoords3[self.frame]+50, self.xcoords3[self.frame]-50], [500, 500, 0, 0], color=self.color3)
+        if self.xcoords3[self.frame] != 0:
+            circle1 = plt.Circle([self.xcoords3[self.frame],25],20, color=self.color3)
+            self.ax0.add_patch(circle1)
+            self.ax1.fill([self.xcoords3[self.frame]-15, self.xcoords3[self.frame]+15, self.xcoords3[self.frame]+50, self.xcoords3[self.frame]-50], [500, 500, 0, 0], color=self.color3)
     
 
 class Smoke: 
-
     def __init__(self, frame, ax1):
         self.frame = frame
         self.ax1 = ax1
@@ -76,7 +78,7 @@ class Smoke:
                     circle = plt.Circle([columnValues[y]+rand[0], rowValues[i]+rand[1]-20], radius, color='white', alpha=nextArray[i, y])
                 else: 
                     radius = random.randint(4, 10)
-                    circle = plt.Circle([columnValues[y]+rand[0], rowValues[i]+rand[1]-20], radius, color='white', alpha=0.7)
+                    circle = plt.Circle([columnValues[y]+rand[0], rowValues[i]+rand[1]-20], radius, color='white', alpha=0.8)
 
                 self.ax1.add_patch(circle)
 
